@@ -1,4 +1,9 @@
-﻿using CMS.Data;
+﻿/*
+Họ Và Tên : Nguyễn Ngọc Bảo Ngân
+Mssv: 2123110503
+Lớp : CCQ2311D
+*/
+using CMS.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CMS.Backend.Controllers
