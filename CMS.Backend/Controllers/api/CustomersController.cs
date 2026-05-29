@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using CMS.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace CMS.Backend.Controllers
+namespace CMS.Backend.Controllers.api
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -25,7 +25,8 @@ namespace CMS.Backend.Controllers
         public IActionResult GetAll()
         {
             var customers = _context.Customers
-                .Select(c => new {
+                .Select(c => new
+                {
                     c.Id,
                     c.FullName,
                     c.Email,

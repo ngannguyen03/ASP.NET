@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using CMS.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace CMS.Backend.Controllers
+namespace CMS.Backend.Controllers.api
 {
     // 1. Định nghĩa đường dẫn để gọi API. 
     // Khi chạy, địa chỉ sẽ là: https://localhost:xxxx/api/posts
@@ -35,7 +35,8 @@ namespace CMS.Backend.Controllers
             // Lấy dữ liệu từ bảng Posts, sắp xếp theo bài mới nhất
             var posts = _context.Posts
                 .OrderByDescending(p => p.Id)
-                .Select(p => new { // "Gọt tỉa" dữ liệu, chỉ lấy những trường cần thiết để JSON nhẹ hơn
+                .Select(p => new
+                { // "Gọt tỉa" dữ liệu, chỉ lấy những trường cần thiết để JSON nhẹ hơn
                     p.Id,
                     p.Title,
                     p.ImageUrl,
@@ -73,7 +74,8 @@ namespace CMS.Backend.Controllers
             // Lọc các bài viết có CategoryId trùng với ID truyền vào từ URL
             var posts = _context.Posts
                 .Where(p => p.CategoryId == categoryId)
-                .Select(p => new {
+                .Select(p => new
+                {
                     p.Id,
                     p.Title,
                     p.ImageUrl,
@@ -83,6 +85,8 @@ namespace CMS.Backend.Controllers
 
             return Ok(posts);
         }
+
+
 
     }
 }

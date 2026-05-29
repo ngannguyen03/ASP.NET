@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using CMS.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace CMS.Backend.Controllers
+namespace CMS.Backend.Controllers.api
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -27,7 +27,8 @@ namespace CMS.Backend.Controllers
             var orders = _context.Orders
                 .Include(o => o.Customer)
                 .OrderByDescending(o => o.OrderDate)
-                .Select(o => new {
+                .Select(o => new
+                {
                     o.Id,
                     o.OrderDate,
                     CustomerName = o.Customer.FullName,
@@ -45,7 +46,26 @@ namespace CMS.Backend.Controllers
             var order = _context.Orders
                 .Include(o => o.OrderDetails)
                 .ThenInclude(od => od.Product)
-                .FirstOrDefault(o => o.Id == id);
+                .Include(o => o.Customer)
+                .Where(o => o.Id == id)
+                .Select(o => new
+                {
+                    o.Id,
+                    o.OrderDate,
+                    o.Status,
+                    o.Notes,
+                    CustomerName = o.Customer.FullName, // Chỉ lấy tên khách hàng (tránh vòng lặp)
+
+                    // Dùng Select để biến đổi danh sách OrderDetails thành object đơn giản
+                    OrderDetails = o.OrderDetails.Select(od => new
+                    {
+                        od.ProductId,
+                        ProductName = od.Product.Name,
+                        od.Quantity,
+                        od.UnitPrice
+                    })
+                })
+                .FirstOrDefault();
 
             if (order == null) return NotFound(new { message = "Không tìm thấy đơn hàng" });
 

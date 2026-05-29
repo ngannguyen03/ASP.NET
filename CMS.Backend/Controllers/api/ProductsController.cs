@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using CMS.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace CMS.Backend.Controllers
+namespace CMS.Backend.Controllers.api
 {
     // Định nghĩa đường dẫn API: api/products
     [Route("api/[controller]")]
@@ -28,7 +28,8 @@ namespace CMS.Backend.Controllers
             // Lấy dữ liệu từ bảng Products, bao gồm thông tin danh mục (Category)
             var products = _context.Products
                 .Include(p => p.CategoryProduct) // Include để lấy dữ liệu bảng liên quan
-                .Select(p => new {
+                .Select(p => new
+                {
                     p.Id,
                     p.Name,
                     p.Price,
@@ -45,15 +46,30 @@ namespace CMS.Backend.Controllers
         [HttpGet("{id}")]
         public IActionResult GetDetail(int id)
         {
+            // Truy vấn dữ liệu và "gọt tỉa" ngay tại đây bằng Select
             var product = _context.Products
                 .Include(p => p.CategoryProduct)
-                .FirstOrDefault(p => p.Id == id);
+                .Where(p => p.Id == id) // Lọc theo ID
+                .Select(p => new        // Sử dụng p. để truy cập các thuộc tính
+                {
+                    p.Id,
+                    p.Name,
+                    p.Price,
+                    p.Description,
+                    p.ImageUrl,
+                    p.StockQuantity,
+                    p.CategoryProductId,
+                    CategoryName = p.CategoryProduct.Name // Vẫn dùng p. để lấy tên danh mục
+                })
+                .FirstOrDefault(); // Lấy bản ghi đầu tiên hoặc null
 
+            // Kiểm tra nếu không tìm thấy
             if (product == null)
             {
                 return NotFound(new { message = "Không tìm thấy sản phẩm này" });
             }
 
+            // Trả về kết quả (lúc này 'product' đã là một object gọn gàng, không còn lỗi vòng lặp)
             return Ok(product);
         }
     }
