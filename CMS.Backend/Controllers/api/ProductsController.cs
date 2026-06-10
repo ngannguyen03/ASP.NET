@@ -1,75 +1,67 @@
-﻿/*
-Họ Và Tên : Nguyễn Ngọc Bảo Ngân
-Mssv: 2123110503
-Lớp : CCQ2311D
-*/
-using Microsoft.AspNetCore.Mvc;
-using CMS.Data;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using CMS.Data;
 
-namespace CMS.Backend.Controllers.api
+namespace CMS.Backend.Controllers
 {
-    // Định nghĩa đường dẫn API: api/products
+    // 1. Định nghĩa đường dẫn để gọi API. [controller] sẽ tự lấy tên là "Categories"
+    // Khi chạy, địa chỉ truy cập dữ liệu sẽ là: https://localhost:xxxx/api/categories
     [Route("api/[controller]")]
+
+    // 2. Đánh dấu đây là một API Controller để hệ thống hỗ trợ các tính năng tự động kiểm tra dữ liệu đầu vào
     [ApiController]
+
+    // 3. API Controller phải kế thừa từ ControllerBase (thay vì kế thừa từ Controller như phân hệ MVC)
     public class ProductsController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
+        // 4. Hàm khởi tạo (Constructor): "Tiêm" ngữ cảnh dữ liệu SQL Server vào để sử dụng
         public ProductsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // 1. Lấy danh sách toàn bộ sản phẩm
+        // 1. Chỉ định phương thức GET (Dùng để kéo dữ liệu từ cơ sở dữ liệu)
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            // Lấy dữ liệu từ bảng Products, bao gồm thông tin danh mục (Category)
-            var products = _context.Products
-                .Include(p => p.CategoryProduct) // Include để lấy dữ liệu bảng liên quan
-                .Select(p => new
-                {
-                    p.Id,
-                    p.Name,
-                    p.Price,
-                    p.ImageUrl,
-                    p.StockQuantity,
-                    CategoryName = p.CategoryProduct.Name // Lấy tên danh mục từ khóa ngoại
-                })
-                .ToList();
+            // Lấy toàn bộ dữ liệu từ bảng Products số nhiều trong SQL Server
+            var products = await _context.Products
+                .OrderByDescending(p => p.Id) // Sắp xếp sản phẩm mới nhất lên đầu
+                .ToListAsync();
 
+            // Trả về kết quả cho Frontend kèm mã trạng thái HTTP 200 OK (Thành công)
             return Ok(products);
         }
 
-        // 2. Lấy chi tiết sản phẩm theo ID
-        [HttpGet("{id}")]
-        public IActionResult GetDetail(int id)
+        // 2. Định nghĩa đường dẫn chứa tham số động: api/products/categoryproduct/{categoryproductId}
+        [HttpGet("categoryproduct/{categoryProductId}")]
+        public async Task<IActionResult> GetByCategoryProduct(int categoryProductId)
         {
-            // Truy vấn dữ liệu và "gọt tỉa" ngay tại đây bằng Select
-            var product = _context.Products
-                .Include(p => p.CategoryProduct)
-                .Where(p => p.Id == id) // Lọc theo ID
-                .Select(p => new        // Sử dụng p. để truy cập các thuộc tính
-                {
-                    p.Id,
-                    p.Name,
-                    p.Price,
-                    p.Description,
-                    p.ImageUrl,
-                    p.StockQuantity,
-                    p.CategoryProductId,
-                    CategoryName = p.CategoryProduct.Name // Vẫn dùng p. để lấy tên danh mục
-                })
-                .FirstOrDefault(); // Lấy bản ghi đầu tiên hoặc null
+            // Lọc các bài viết có CategoryId trùng với ID truyền vào từ thanh URL
+            var products = await _context.Products
+                .Where(p => p.CategoryProductId == categoryProductId)
+                .ToListAsync();
 
-            // Kiểm tra nếu không tìm thấy
+            return Ok(products);
+        }
+        // 3. Định nghĩa đường dẫn nhận ID trực tiếp: api/products/{id}
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetDetail(int id)
+        {
+            // 3.1. Quét bảng Products để tìm sản phẩm đầu tiên có Id khớp với tham số
+            var product = await _context.Products
+                .FirstOrDefaultAsync(p => p.Id == id);
+
+            // 3.2 Xử lý kịch bản lỗi bảo vệ hệ thống: ID không tồn tại trong Database
             if (product == null)
             {
-                return NotFound(new { message = "Không tìm thấy sản phẩm này" });
+                // Trả về mã lỗi 404 kèm một "gói tin" JSON thông báo nhỏ gọn để Frontend tự xử lý UI
+                return NotFound(new { message = "Không tìm thấy sản phẩm này trong hệ thống" });
             }
 
-            // Trả về kết quả (lúc này 'product' đã là một object gọn gàng, không còn lỗi vòng lặp)
+            // 3.3. Trả về toàn bộ đối tượng sản phẩm (bao gồm cả trường Content chứa mã HTML) kèm mã 200 OK
             return Ok(product);
         }
     }

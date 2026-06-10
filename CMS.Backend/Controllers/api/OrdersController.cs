@@ -1,13 +1,14 @@
-﻿/*
-Họ Và Tên : Nguyễn Ngọc Bảo Ngân
-Mssv: 2123110503
-Lớp : CCQ2311D
-*/
-using Microsoft.AspNetCore.Mvc;
+﻿
 using CMS.Data;
+using CMS.Data.Entities;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace CMS.Backend.Controllers.api
+namespace CMS.Backend.Controllers.Api
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -20,56 +21,172 @@ namespace CMS.Backend.Controllers.api
             _context = context;
         }
 
-        // 1. Lấy toàn bộ đơn hàng (kèm thông tin khách hàng)
-        [HttpGet]
-        public IActionResult GetAll()
+        #region --- DATA TRANSFER OBJECTS (DTOs) ---
+
+        // DTO nhận dữ liệu khi Tạo mới đơn hàng
+        public class OrderInputDto
         {
-            var orders = _context.Orders
-                .Include(o => o.Customer)
-                .OrderByDescending(o => o.OrderDate)
-                .Select(o => new
-                {
-                    o.Id,
-                    o.OrderDate,
-                    CustomerName = o.Customer.FullName,
-                    o.Status,
-                    o.Notes
-                })
-                .ToList();
+            public int CustomerId { get; set; }
+            public string? Notes { get; set; }
+        }
+
+        // DTO dùng riêng khi Cập nhật trạng thái hoặc thông tin đơn hàng
+        public class OrderUpdateDto
+        {
+            public int Status { get; set; } // 0: Chờ duyệt, 1: Đang giao, 2: Đã xong
+            public string? Notes { get; set; }
+        }
+
+        #endregion
+
+        // =====================================
+        // GET ALL ORDERS
+        // URL: GET api/orders
+        // =====================================
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var orders = await _context.Orders
+                                       .Include(o => o.Customer)
+                                       .OrderByDescending(o => o.OrderDate)
+                                       .Select(o => new
+                                       {
+                                           o.Id,
+                                           o.OrderDate,
+                                           o.Status,
+                                           o.Notes,
+                                           o.CustomerId,
+                                           CustomerName = o.Customer != null ? o.Customer.FullName : "Khách vãng lai"
+                                       })
+                                       .ToListAsync();
+
             return Ok(orders);
         }
 
-        // 2. Lấy chi tiết đơn hàng (kèm sản phẩm)
+        // =====================================
+        // GET ORDER BY ID
+        // URL: GET api/orders/5
+        // =====================================
         [HttpGet("{id}")]
-        public IActionResult GetDetail(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            var order = _context.Orders
-                .Include(o => o.OrderDetails)
-                .ThenInclude(od => od.Product)
-                .Include(o => o.Customer)
-                .Where(o => o.Id == id)
-                .Select(o => new
-                {
-                    o.Id,
-                    o.OrderDate,
-                    o.Status,
-                    o.Notes,
-                    CustomerName = o.Customer.FullName, // Chỉ lấy tên khách hàng (tránh vòng lặp)
+            var order = await _context.Orders
+                                      .Include(o => o.Customer)
+                                      .Where(o => o.Id == id)
+                                      .Select(o => new
+                                      {
+                                          o.Id,
+                                          o.OrderDate,
+                                          o.Status,
+                                          o.Notes,
+                                          Customer = o.Customer != null ? new
+                                          {
+                                              o.Customer.Id,
+                                              o.Customer.FullName,
+                                              o.Customer.Email,
+                                              o.Customer.Phone
+                                          } : null
+                                      })
+                                      .FirstOrDefaultAsync();
 
-                    // Dùng Select để biến đổi danh sách OrderDetails thành object đơn giản
-                    OrderDetails = o.OrderDetails.Select(od => new
-                    {
-                        od.ProductId,
-                        ProductName = od.Product.Name,
-                        od.Quantity,
-                        od.UnitPrice
-                    })
-                })
-                .FirstOrDefault();
-
-            if (order == null) return NotFound(new { message = "Không tìm thấy đơn hàng" });
+            if (order == null)
+            {
+                return NotFound(new { message = $"Không tìm thấy hóa đơn có mã ID: {id}" });
+            }
 
             return Ok(order);
+        }
+
+        // =====================================
+        // CREATE ORDER
+        // URL: POST api/orders
+        // =====================================
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] OrderInputDto input)
+        {
+            if (input == null)
+            {
+                return BadRequest(new { message = "Dữ liệu đơn hàng không hợp lệ." });
+            }
+
+            // Kiểm tra xem CustomerId có tồn tại trong hệ thống bảng Customer không
+            var isCustomerValid = await _context.Customers.AnyAsync(c => c.Id == input.CustomerId);
+            if (!isCustomerValid)
+            {
+                return BadRequest(new { message = $"Mã khách hàng (CustomerId = {input.CustomerId}) không tồn tại!" });
+            }
+
+            // Gán dữ liệu sang thực thể Order thực tế
+            var newOrder = new Order
+            {
+                CustomerId = input.CustomerId,
+                Notes = input.Notes,
+                OrderDate = DateTime.Now, // Tự động lấy giờ hiện tại
+                Status = 0                // Mặc định ban đầu luôn là 0 (Chờ duyệt)
+            };
+
+            _context.Orders.Add(newOrder);
+            await _context.SaveChangesAsync();
+
+            return Ok(new
+            {
+                message = "Đặt đơn hàng thành công (Chờ ban quản trị duyệt)!",
+                data = newOrder
+            });
+        }
+
+        // =====================================
+        // UPDATE ORDER STATUS (Cập nhật trạng thái đơn hàng)
+        // URL: PUT api/orders/5
+        // =====================================
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] OrderUpdateDto input)
+        {
+            var order = await _context.Orders.FindAsync(id);
+
+            if (order == null)
+            {
+                return NotFound(new { message = "Không tìm thấy thông tin đơn hàng này." });
+            }
+
+            // Kiểm tra tính hợp lệ của Status theo yêu cầu (chỉ nhận 0, 1, 2)
+            if (input.Status < 0 || input.Status > 2)
+            {
+                return BadRequest(new { message = "Trạng thái đơn hàng không hợp lệ! Chỉ nhận (0: Chờ duyệt, 1: Đang giao, 2: Đã xong)." });
+            }
+
+            // Cập nhật dữ liệu chỉnh sửa
+            order.Status = input.Status;
+            order.Notes = input.Notes;
+
+            await _context.SaveChangesAsync();
+
+            return Ok(new
+            {
+                message = "Cập nhật trạng thái và thông tin đơn hàng thành công!",
+                data = order
+            });
+        }
+
+        // =====================================
+        // DELETE ORDER
+        // URL: DELETE api/orders/5
+        // =====================================
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var order = await _context.Orders.FindAsync(id);
+
+            if (order == null)
+            {
+                return NotFound(new { message = "Không tìm thấy đơn hàng cần hủy bỏ." });
+            }
+
+            // Thực hiện xóa đơn hàng
+            _context.Orders.Remove(order);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = $"Đã hủy và xóa hoàn toàn đơn hàng mang mã Id: {id}" });
         }
     }
 }
