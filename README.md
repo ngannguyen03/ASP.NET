@@ -197,6 +197,8 @@ CMS_NguyenNgocBaoNgan/
 - SQL Server (Express hoặc Developer Edition)
 - Visual Studio 2022 / VS Code
 
+- Loại bỏ thư mục rác node_modules/, bin/, obj/ ra khỏi Git thông qua file .gitignore chuẩn:
+
 ### Bước 1 — Clone & cấu hình DB
 
 ```powershell
