@@ -3,7 +3,7 @@
 > **Họ và tên:** Nguyễn Ngọc Bảo Ngân  
 > **MSSV:** 2123110503  
 > **Lớp:** CCQ2311D  
-> **Môn học:** ASP.NET
+> **Môn học:** Lập trình ứng dụng Web nâng cao
 
 ---
 
@@ -22,6 +22,8 @@
 11. [Hướng dẫn kiểm thử](#11-hướng-dẫn-kiểm-thử)
 12. [Các trường hợp lỗi thường gặp](#12-các-trường-hợp-lỗi-thường-gặp)
 13. [Cấu hình & Triển khai](#13-cấu-hình--triển-khai)
+14. [Quản lý Git & .gitignore](#14-quản-lý-git--gitignore)
+15. [Thống kê chức năng Frontend (API vs Client-side)](#15-thống-kê-chức-năng-frontend-api-vs-client-side)
 
 ---
 
@@ -34,13 +36,13 @@ Website bán gốm sứ nghệ thuật **NganDesign** là hệ thống thương 
 
 ### Mục tiêu
 
-| Tiêu chí | Chi tiết |
-|---------|---------|
+| Tiêu chí         | Chi tiết                                                                   |
+| ---------------- | -------------------------------------------------------------------------- |
 | Quản lý danh mục | Danh mục blog (Category) và danh mục sản phẩm (CategoryProduct) riêng biệt |
-| Sản phẩm | CRUD đầy đủ, hỗ trợ nhiều ảnh (gallery), quản lý tồn kho |
-| Đặt hàng | Giỏ hàng, checkout, trừ tồn kho, gửi email xác nhận |
-| Tài khoản | Đăng ký/đăng nhập, quản lý hồ sơ, nhiều địa chỉ nhận hàng |
-| Bài viết | Blog theo danh mục, chi tiết bài viết |
+| Sản phẩm         | CRUD đầy đủ, hỗ trợ nhiều ảnh (gallery), quản lý tồn kho                   |
+| Đặt hàng         | Giỏ hàng, checkout, trừ tồn kho, gửi email xác nhận                        |
+| Tài khoản        | Đăng ký/đăng nhập, quản lý hồ sơ, nhiều địa chỉ nhận hàng                  |
+| Bài viết         | Blog theo danh mục, chi tiết bài viết                                      |
 
 ---
 
@@ -48,35 +50,35 @@ Website bán gốm sứ nghệ thuật **NganDesign** là hệ thống thương 
 
 ### Backend
 
-| Thành phần | Phiên bản | Mục đích |
-|-----------|----------|---------|
-| ASP.NET Core | .NET 8.0 | Web framework (MVC + Web API) |
-| Entity Framework Core | 8.0.27 | ORM, migrations |
-| Microsoft.EntityFrameworkCore.SqlServer | 8.0.27 | Provider SQL Server |
-| Microsoft.AspNetCore.Authentication.JwtBearer | 8.0.28 | JWT cho API khách hàng |
-| ASP.NET Core Cookie Auth | built-in | Đăng nhập admin |
-| Swashbuckle.AspNetCore | 10.1.7 | Swagger UI tại `/swagger` |
-| System.Net.Mail | built-in | Gửi email SMTP |
-| BCrypt.Net-Next | — | Hash mật khẩu |
+| Thành phần                                    | Phiên bản | Mục đích                      |
+| --------------------------------------------- | --------- | ----------------------------- |
+| ASP.NET Core                                  | .NET 8.0  | Web framework (MVC + Web API) |
+| Entity Framework Core                         | 8.0.27    | ORM, migrations               |
+| Microsoft.EntityFrameworkCore.SqlServer       | 8.0.27    | Provider SQL Server           |
+| Microsoft.AspNetCore.Authentication.JwtBearer | 8.0.28    | JWT cho API khách hàng        |
+| ASP.NET Core Cookie Auth                      | built-in  | Đăng nhập admin               |
+| Swashbuckle.AspNetCore                        | 10.1.7    | Swagger UI tại `/swagger`     |
+| System.Net.Mail                               | built-in  | Gửi email SMTP                |
+| BCrypt.Net-Next                               | —         | Hash mật khẩu                 |
 
 ### Frontend
 
-| Thành phần | Phiên bản | Mục đích |
-|-----------|----------|---------|
-| React | 19.2.6 | UI framework |
-| react-router-dom | 6.30.3 | Client-side routing |
-| axios | 1.17.0 | HTTP client gọi API |
-| react-icons | 5.6.0 | Bộ icon (Feather Icons) |
-| react-scripts | 5.0.1 | Build tool (CRA) |
+| Thành phần       | Phiên bản | Mục đích                |
+| ---------------- | --------- | ----------------------- |
+| React            | 19.2.6    | UI framework            |
+| react-router-dom | 6.30.3    | Client-side routing     |
+| axios            | 1.17.0    | HTTP client gọi API     |
+| react-icons      | 5.6.0     | Bộ icon (Feather Icons) |
+| react-scripts    | 5.0.1     | Build tool (CRA)        |
 
 ### Database & Công cụ
 
-| Thành phần | Chi tiết |
-|-----------|---------|
-| SQL Server | MSI\SQLEXPRESS02 |
-| Database | CMS_NGUYENDUYANHTUAN_DB |
-| SSMS | Quản lý DB thủ công |
-| Visual Studio / VS Code | IDE |
+| Thành phần              | Chi tiết                |
+| ----------------------- | ----------------------- |
+| SQL Server              | MSI\SQLEXPRESS02        |
+| Database                | CMS_NGUYENDUYANHTUAN_DB |
+| SSMS                    | Quản lý DB thủ công     |
+| Visual Studio / VS Code | IDE                     |
 
 ---
 
@@ -197,8 +199,6 @@ CMS_NguyenNgocBaoNgan/
 - SQL Server (Express hoặc Developer Edition)
 - Visual Studio 2022 / VS Code
 
-- Loại bỏ thư mục rác node_modules/, bin/, obj/ ra khỏi Git thông qua file .gitignore chuẩn:
-
 ### Bước 1 — Clone & cấu hình DB
 
 ```powershell
@@ -317,21 +317,22 @@ cms.frontend/
 └── .env.example       ← Template mẫu (commit lên git để teamwork)
 ```
 
-| File | Khi nào dùng | Có commit git không |
-|------|-------------|-------------------|
-| `.env` | Fallback mọi môi trường | Không (trong `.gitignore`) |
-| `.env.development` | `npm start` | Không (trong `.gitignore`) |
-| `.env.production` | `npm run build` | Không (trong `.gitignore`) |
-| `.env.example` | Template hướng dẫn | **Có** — commit để team biết cần điền gì |
+| File               | Khi nào dùng            | Có commit git không                      |
+| ------------------ | ----------------------- | ---------------------------------------- |
+| `.env`             | Fallback mọi môi trường | Không (trong `.gitignore`)               |
+| `.env.development` | `npm start`             | Không (trong `.gitignore`)               |
+| `.env.production`  | `npm run build`         | Không (trong `.gitignore`)               |
+| `.env.example`     | Template hướng dẫn      | **Có** — commit để team biết cần điền gì |
 
 ### 5.2 Các biến môi trường
 
-| Biến | Mô tả | Giá trị mặc định (dev) |
-|------|-------|----------------------|
-| `REACT_APP_API_URL` | URL gốc REST API backend | `https://localhost:7090/api` |
-| `REACT_APP_IMAGE_BASE_URL` | URL gốc để ghép đường dẫn ảnh upload | `https://localhost:7090` |
+| Biến                       | Mô tả                                | Giá trị mặc định (dev)       |
+| -------------------------- | ------------------------------------ | ---------------------------- |
+| `REACT_APP_API_URL`        | URL gốc REST API backend             | `https://localhost:7090/api` |
+| `REACT_APP_IMAGE_BASE_URL` | URL gốc để ghép đường dẫn ảnh upload | `https://localhost:7090`     |
 
 **Nội dung file `.env` (dev):**
+
 ```env
 # URL gốc của Backend API (không có dấu / ở cuối)
 REACT_APP_API_URL=https://localhost:7090/api
@@ -341,6 +342,7 @@ REACT_APP_IMAGE_BASE_URL=https://localhost:7090
 ```
 
 **Nội dung file `.env.production` (khi deploy):**
+
 ```env
 REACT_APP_API_URL=https://your-domain.com/api
 REACT_APP_IMAGE_BASE_URL=https://your-domain.com
@@ -354,32 +356,32 @@ Tất cả các component đều import từ file này, **không đọc `process
 // src/config/constants.js
 
 export const API_BASE_URL =
-  process.env.REACT_APP_API_URL || 'https://localhost:7090/api';
+  process.env.REACT_APP_API_URL || "https://localhost:7090/api";
 
 export const IMAGE_BASE_URL =
-  process.env.REACT_APP_IMAGE_BASE_URL || 'https://localhost:7090';
+  process.env.REACT_APP_IMAGE_BASE_URL || "https://localhost:7090";
 
 /**
  * Ghép URL ảnh đầy đủ từ đường dẫn tương đối trả về bởi API.
  * Ví dụ: "/uploads/product.jpg" → "https://localhost:7090/uploads/product.jpg"
  */
-export function getImageUrl(path, fallback = '') {
+export function getImageUrl(path, fallback = "") {
   if (!path) return fallback;
-  if (path.startsWith('http://') || path.startsWith('https://')) return path;
-  const separator = path.startsWith('/') ? '' : '/';
+  if (path.startsWith("http://") || path.startsWith("https://")) return path;
+  const separator = path.startsWith("/") ? "" : "/";
   return `${IMAGE_BASE_URL}${separator}${path}`;
 }
 ```
 
 ### 5.4 Nơi sử dụng trong dự án
 
-| File | Cách dùng |
-|------|----------|
-| `src/api/axiosClient.js` | `baseURL: API_BASE_URL` — mọi request API đều qua đây |
-| `src/context/CartContext.jsx` | `getImageUrl()` trong `buildItem()` — resolve ảnh khi thêm vào giỏ |
-| `src/components/Product/ProductCard.jsx` | `getImageUrl()` trong hàm `getImage()` |
-| `src/pages/product/ProductDetail.jsx` | `getImageUrl()` trong hàm `resolveImg()` |
-| `src/pages/search/SearchResults.jsx` | `getImageUrl()` khi render ảnh sản phẩm trong kết quả tìm kiếm |
+| File                                     | Cách dùng                                                          |
+| ---------------------------------------- | ------------------------------------------------------------------ |
+| `src/api/axiosClient.js`                 | `baseURL: API_BASE_URL` — mọi request API đều qua đây              |
+| `src/context/CartContext.jsx`            | `getImageUrl()` trong `buildItem()` — resolve ảnh khi thêm vào giỏ |
+| `src/components/Product/ProductCard.jsx` | `getImageUrl()` trong hàm `getImage()`                             |
+| `src/pages/product/ProductDetail.jsx`    | `getImageUrl()` trong hàm `resolveImg()`                           |
+| `src/pages/search/SearchResults.jsx`     | `getImageUrl()` khi render ảnh sản phẩm trong kết quả tìm kiếm     |
 
 ### 5.5 Sơ đồ luồng dữ liệu URL
 
@@ -427,19 +429,19 @@ Advertisements (banner — độc lập)
 
 ### Mô tả các bảng
 
-| Bảng | Mô tả | Trường quan trọng |
-|------|-------|------------------|
-| `Categories` | Danh mục bài viết blog | Name, Description |
-| `Posts` | Bài viết | Title, Content, ImageUrl, CategoryId, CreatedDate |
-| `Users` | Tài khoản quản trị | Username (unique), PasswordHash, Role |
-| `CategoryProduct` | Danh mục sản phẩm | Name, Description, ImageUrl |
-| `Products` | Sản phẩm | Name, Price, StockQuantity, ImageUrl, CategoryProductId |
-| `ProductImages` | Ảnh phụ sản phẩm | ProductId, Url, SortOrder |
-| `Customers` | Khách hàng | FullName, Email (unique), Phone, Address, Password |
-| `CustomerAddresses` | Địa chỉ giao hàng | CustomerId, RecipientName, Phone, Address, IsDefault |
-| `Orders` | Đơn hàng | CustomerId, Status (0/1/2), ShippingAddress, RecipientName |
-| `OrderDetails` | Chi tiết đơn | OrderId, ProductId, Quantity, UnitPrice |
-| `Advertisements` | Banner trang chủ | Title, Subtitle, ImageUrl, IsActive, SortOrder |
+| Bảng                | Mô tả                  | Trường quan trọng                                          |
+| ------------------- | ---------------------- | ---------------------------------------------------------- |
+| `Categories`        | Danh mục bài viết blog | Name, Description                                          |
+| `Posts`             | Bài viết               | Title, Content, ImageUrl, CategoryId, CreatedDate          |
+| `Users`             | Tài khoản quản trị     | Username (unique), PasswordHash, Role                      |
+| `CategoryProduct`   | Danh mục sản phẩm      | Name, Description, ImageUrl                                |
+| `Products`          | Sản phẩm               | Name, Price, StockQuantity, ImageUrl, CategoryProductId    |
+| `ProductImages`     | Ảnh phụ sản phẩm       | ProductId, Url, SortOrder                                  |
+| `Customers`         | Khách hàng             | FullName, Email (unique), Phone, Address, Password         |
+| `CustomerAddresses` | Địa chỉ giao hàng      | CustomerId, RecipientName, Phone, Address, IsDefault       |
+| `Orders`            | Đơn hàng               | CustomerId, Status (0/1/2), ShippingAddress, RecipientName |
+| `OrderDetails`      | Chi tiết đơn           | OrderId, ProductId, Quantity, UnitPrice                    |
+| `Advertisements`    | Banner trang chủ       | Title, Subtitle, ImageUrl, IsActive, SortOrder             |
 
 ### Unique Index
 
@@ -450,12 +452,12 @@ IX_Users_Username_Unique    ON Users(Username)
 
 ### Cascade Delete
 
-| Bảng cha | Bảng con | Hành động |
-|---------|---------|----------|
-| Customers | Orders | CASCADE |
-| Customers | CustomerAddresses | CASCADE |
-| Orders | OrderDetails | CASCADE |
-| Products | ProductImages | CASCADE |
+| Bảng cha  | Bảng con          | Hành động |
+| --------- | ----------------- | --------- |
+| Customers | Orders            | CASCADE   |
+| Customers | CustomerAddresses | CASCADE   |
+| Orders    | OrderDetails      | CASCADE   |
+| Products  | ProductImages     | CASCADE   |
 
 ---
 
@@ -464,83 +466,95 @@ IX_Users_Username_Unique    ON Users(Username)
 ### 7.1 Admin Panel (`https://localhost:7090`)
 
 #### Đăng nhập Admin
+
 - URL: `/Account/Login`
 - Xác thực bằng Cookie (phiên 60 phút)
 - Tài khoản mặc định: `admin` / `Admin@123`
 
 #### Dashboard
+
 - URL: `/Home`
 - Hiển thị tổng số: Sản phẩm, Danh mục, Đơn hàng, Khách hàng
 
 #### Quản lý Danh mục Blog (`/Category`)
-| Thao tác | Mô tả |
-|---------|-------|
-| Xem danh sách | Bảng tất cả danh mục, phân trang |
-| Thêm mới | Form: Tên (bắt buộc), Mô tả |
-| Chỉnh sửa | Sửa tên, mô tả |
-| Xóa | Xóa danh mục (cảnh báo nếu còn bài viết) |
+
+| Thao tác      | Mô tả                                    |
+| ------------- | ---------------------------------------- |
+| Xem danh sách | Bảng tất cả danh mục, phân trang         |
+| Thêm mới      | Form: Tên (bắt buộc), Mô tả              |
+| Chỉnh sửa     | Sửa tên, mô tả                           |
+| Xóa           | Xóa danh mục (cảnh báo nếu còn bài viết) |
 
 #### Quản lý Bài viết (`/Post`)
-| Thao tác | Mô tả |
-|---------|-------|
-| Xem danh sách | Tiêu đề, danh mục, ngày tạo |
-| Thêm mới | Form: Tiêu đề, Nội dung, Ảnh đại diện, Danh mục |
-| Chỉnh sửa | Cập nhật toàn bộ thông tin |
-| Xóa | Xóa bài viết |
+
+| Thao tác      | Mô tả                                           |
+| ------------- | ----------------------------------------------- |
+| Xem danh sách | Tiêu đề, danh mục, ngày tạo                     |
+| Thêm mới      | Form: Tiêu đề, Nội dung, Ảnh đại diện, Danh mục |
+| Chỉnh sửa     | Cập nhật toàn bộ thông tin                      |
+| Xóa           | Xóa bài viết                                    |
 
 #### Quản lý Danh mục Sản phẩm (`/CategoriesProducts`)
-| Thao tác | Mô tả |
-|---------|-------|
-| Xem danh sách | Tên, mô tả, ảnh đại diện |
-| Thêm mới | Form: Tên, Mô tả, Upload ảnh |
-| Chỉnh sửa | Sửa thông tin + đổi ảnh |
-| Xóa | Xóa danh mục |
+
+| Thao tác      | Mô tả                        |
+| ------------- | ---------------------------- |
+| Xem danh sách | Tên, mô tả, ảnh đại diện     |
+| Thêm mới      | Form: Tên, Mô tả, Upload ảnh |
+| Chỉnh sửa     | Sửa thông tin + đổi ảnh      |
+| Xóa           | Xóa danh mục                 |
 
 #### Quản lý Sản phẩm (`/Product`)
-| Thao tác | Mô tả |
-|---------|-------|
-| Xem danh sách | Tên, giá, tồn kho, danh mục, ảnh |
-| Thêm mới | Form: Tên, Giá, Tồn kho, Mô tả, Ảnh đại diện, Danh mục |
-| Chỉnh sửa | Sửa thông tin + **Gallery ảnh**: upload nhiều ảnh, xóa ảnh, đặt ảnh làm cover |
-| Xóa | Xóa sản phẩm (cascade xóa ProductImages) |
+
+| Thao tác      | Mô tả                                                                         |
+| ------------- | ----------------------------------------------------------------------------- |
+| Xem danh sách | Tên, giá, tồn kho, danh mục, ảnh                                              |
+| Thêm mới      | Form: Tên, Giá, Tồn kho, Mô tả, Ảnh đại diện, Danh mục                        |
+| Chỉnh sửa     | Sửa thông tin + **Gallery ảnh**: upload nhiều ảnh, xóa ảnh, đặt ảnh làm cover |
+| Xóa           | Xóa sản phẩm (cascade xóa ProductImages)                                      |
 
 #### Quản lý Khách hàng (`/Customer`)
-| Thao tác | Mô tả |
-|---------|-------|
-| Xem danh sách | ID, tên, email, SĐT, địa chỉ |
-| Xem chi tiết | Thông tin đầy đủ + lịch sử đơn hàng |
+
+| Thao tác      | Mô tả                               |
+| ------------- | ----------------------------------- |
+| Xem danh sách | ID, tên, email, SĐT, địa chỉ        |
+| Xem chi tiết  | Thông tin đầy đủ + lịch sử đơn hàng |
 
 #### Quản lý Đơn hàng (`/Order`)
-| Thao tác | Mô tả |
-|---------|-------|
-| Xem danh sách | Mã đơn, khách hàng, ngày, trạng thái |
-| Xem chi tiết | Danh sách sản phẩm, địa chỉ giao, tổng tiền |
-| Cập nhật trạng thái | 0: Chờ duyệt → 1: Đang giao → 2: Hoàn tất |
+
+| Thao tác            | Mô tả                                       |
+| ------------------- | ------------------------------------------- |
+| Xem danh sách       | Mã đơn, khách hàng, ngày, trạng thái        |
+| Xem chi tiết        | Danh sách sản phẩm, địa chỉ giao, tổng tiền |
+| Cập nhật trạng thái | 0: Chờ duyệt → 1: Đang giao → 2: Hoàn tất   |
 
 #### Quản lý Người dùng Admin (`/User`)
-| Thao tác | Mô tả |
-|---------|-------|
-| Xem danh sách | Username, họ tên, vai trò |
-| Thêm mới | Username, mật khẩu, họ tên, vai trò (Admin/Editor) |
-| Chỉnh sửa | Sửa thông tin |
-| Xóa | Xóa tài khoản admin |
+
+| Thao tác      | Mô tả                                              |
+| ------------- | -------------------------------------------------- |
+| Xem danh sách | Username, họ tên, vai trò                          |
+| Thêm mới      | Username, mật khẩu, họ tên, vai trò (Admin/Editor) |
+| Chỉnh sửa     | Sửa thông tin                                      |
+| Xóa           | Xóa tài khoản admin                                |
 
 ---
 
 ### 7.2 Frontend Customer (`http://localhost:3000`)
 
 #### Trang chủ (`/`)
+
 - Banner carousel (Advertisements)
 - Sản phẩm nổi bật
 - Danh mục sản phẩm
 - Bài viết mới nhất
 
 #### Trang sản phẩm (`/products`)
+
 - Phân trang 9 sản phẩm/trang
 - Card sản phẩm: ảnh, tên, giá, nút thêm giỏ hàng
 - Lọc theo danh mục
 
 #### Chi tiết sản phẩm (`/products/:id`)
+
 - Gallery ảnh dọc bên trái + ảnh chính bên phải
 - Breadcrumb navigation
 - Thông tin: tên, giá, tình trạng tồn kho (chip màu)
@@ -550,10 +564,12 @@ IX_Users_Username_Unique    ON Users(Username)
 - Sản phẩm liên quan (cùng danh mục, tối đa 4 sản phẩm)
 
 #### Giỏ hàng (`/cart`)
+
 - Danh sách sản phẩm, điều chỉnh số lượng, xóa
 - Tổng tiền, nút Tiến hành thanh toán
 
 #### Thanh toán (`/checkout`)
+
 - Chọn nhanh địa chỉ đã lưu (nếu đã đăng nhập)
 - Nút "Địa chỉ mới" để nhập thông tin mới
 - Form: Tên người nhận, SĐT, Địa chỉ, Ghi chú
@@ -562,30 +578,36 @@ IX_Users_Username_Unique    ON Users(Username)
 - **Tự động lưu** địa chỉ mới vào danh sách địa chỉ của tài khoản
 
 #### Đăng ký (`/register`)
+
 - Thông tin: Họ tên, Email, SĐT (tuỳ chọn), Địa chỉ (tuỳ chọn), Mật khẩu, Xác nhận mật khẩu
 - Chuyển hướng sang trang đăng nhập sau 2 giây
 
 #### Đăng nhập (`/login`)
+
 - Form: Email, Mật khẩu (hiện/ẩn)
 - Link "Quên mật khẩu"
 - Lưu token JWT vào localStorage
 
 #### Quên mật khẩu (`/forgot-password`)
+
 - Nhập email → Nhận OTP qua email
 - Nhập OTP + mật khẩu mới → Reset
 
 #### Tài khoản (`/account`) — Yêu cầu đăng nhập
 
 **Tab 1: Thông tin cá nhân**
+
 - Xem và cập nhật: Họ tên, Email, SĐT
 - Validation client-side trước khi gửi
 
 **Tab 2: Đơn hàng của tôi**
+
 - Danh sách đơn hàng theo thời gian
 - Click mở rộng: xem chi tiết sản phẩm, địa chỉ giao, tổng tiền
 - Badge trạng thái màu sắc: Chờ duyệt / Đang giao / Hoàn tất
 
 **Tab 3: Địa chỉ nhận hàng**
+
 - Địa chỉ mặc định (viền vàng, badge ★)
 - Danh sách địa chỉ phụ
 - Thêm địa chỉ mới (inline form)
@@ -593,13 +615,16 @@ IX_Users_Username_Unique    ON Users(Username)
 - Đặt làm địa chỉ mặc định → tự cập nhật context
 
 **Tab 4: Đổi mật khẩu**
+
 - Nhập mật khẩu cũ, mật khẩu mới, xác nhận
 
 #### Blog (`/blog`)
+
 - Danh sách bài viết, lọc theo danh mục
 - Chi tiết bài viết: nội dung, ngày đăng, danh mục
 
 #### Trang đang phát triển
+
 - `/booking` — Đặt lịch hẹn
 - `/custom-order` — Đặt hàng theo yêu cầu
 - `/contact` — Liên hệ
@@ -613,15 +638,16 @@ IX_Users_Username_Unique    ON Users(Username)
 
 ### Auth (JWT)
 
-| Method | Endpoint | Mô tả | Auth |
-|--------|---------|-------|------|
-| POST | `/auth/register` | Đăng ký tài khoản | — |
-| POST | `/auth/login` | Đăng nhập, trả về JWT | — |
-| POST | `/auth/forgot-password` | Gửi OTP reset qua email | — |
-| POST | `/auth/reset-password` | Reset mật khẩu bằng OTP | — |
-| POST | `/auth/change-password` | Đổi mật khẩu | JWT |
+| Method | Endpoint                | Mô tả                   | Auth |
+| ------ | ----------------------- | ----------------------- | ---- |
+| POST   | `/auth/register`        | Đăng ký tài khoản       | —    |
+| POST   | `/auth/login`           | Đăng nhập, trả về JWT   | —    |
+| POST   | `/auth/forgot-password` | Gửi OTP reset qua email | —    |
+| POST   | `/auth/reset-password`  | Reset mật khẩu bằng OTP | —    |
+| POST   | `/auth/change-password` | Đổi mật khẩu            | JWT  |
 
 **Body đăng ký:**
+
 ```json
 {
   "fullName": "Nguyễn Văn A",
@@ -633,10 +659,17 @@ IX_Users_Username_Unique    ON Users(Username)
 ```
 
 **Response đăng nhập:**
+
 ```json
 {
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-  "user": { "id": 1, "fullName": "Nguyễn Văn A", "email": "...", "phone": "...", "address": "..." }
+  "user": {
+    "id": 1,
+    "fullName": "Nguyễn Văn A",
+    "email": "...",
+    "phone": "...",
+    "address": "..."
+  }
 }
 ```
 
@@ -644,20 +677,21 @@ IX_Users_Username_Unique    ON Users(Username)
 
 ### Products
 
-| Method | Endpoint | Mô tả | Auth |
-|--------|---------|-------|------|
-| GET | `/products` | Danh sách sản phẩm (có phân trang `?page=1&pageSize=9`) | — |
-| GET | `/products/:id` | Chi tiết sản phẩm (kèm Images) | — |
-| GET | `/products/category/:categoryId` | Sản phẩm theo danh mục | — |
-| GET | `/products/search?keyword=` | Tìm kiếm theo tên | — |
-| POST | `/products` | Thêm sản phẩm mới | Admin Cookie |
-| PUT | `/products/:id` | Cập nhật sản phẩm | Admin Cookie |
-| DELETE | `/products/:id` | Xóa sản phẩm | Admin Cookie |
-| POST | `/products/:id/images` | Upload ảnh gallery (`multipart/form-data`) | Admin Cookie |
-| DELETE | `/products/:id/images/:imageId` | Xóa ảnh gallery | Admin Cookie |
-| PUT | `/products/:id/images/:imageId/cover` | Đặt ảnh làm cover | Admin Cookie |
+| Method | Endpoint                              | Mô tả                                                   | Auth         |
+| ------ | ------------------------------------- | ------------------------------------------------------- | ------------ |
+| GET    | `/products`                           | Danh sách sản phẩm (có phân trang `?page=1&pageSize=9`) | —            |
+| GET    | `/products/:id`                       | Chi tiết sản phẩm (kèm Images)                          | —            |
+| GET    | `/products/category/:categoryId`      | Sản phẩm theo danh mục                                  | —            |
+| GET    | `/products/search?keyword=`           | Tìm kiếm theo tên                                       | —            |
+| POST   | `/products`                           | Thêm sản phẩm mới                                       | Admin Cookie |
+| PUT    | `/products/:id`                       | Cập nhật sản phẩm                                       | Admin Cookie |
+| DELETE | `/products/:id`                       | Xóa sản phẩm                                            | Admin Cookie |
+| POST   | `/products/:id/images`                | Upload ảnh gallery (`multipart/form-data`)              | Admin Cookie |
+| DELETE | `/products/:id/images/:imageId`       | Xóa ảnh gallery                                         | Admin Cookie |
+| PUT    | `/products/:id/images/:imageId/cover` | Đặt ảnh làm cover                                       | Admin Cookie |
 
 **Response GET /products/:id:**
+
 ```json
 {
   "id": 1,
@@ -679,32 +713,33 @@ IX_Users_Username_Unique    ON Users(Username)
 
 ### Customers & Addresses
 
-| Method | Endpoint | Mô tả | Auth |
-|--------|---------|-------|------|
-| GET | `/customers` | Danh sách khách hàng | Admin Cookie |
-| GET | `/customers/:id` | Thông tin khách hàng | Admin Cookie |
-| POST | `/customers` | Đăng ký (dùng cho `/auth/register`) | — |
-| PUT | `/customers/:id` | Cập nhật thông tin | JWT |
-| DELETE | `/customers/:id` | Xóa tài khoản | Admin Cookie |
-| GET | `/customers/:id/addresses` | Danh sách địa chỉ (auto-seed từ profile nếu trống) | JWT |
-| POST | `/customers/:id/addresses` | Thêm địa chỉ mới | JWT |
-| PUT | `/customers/:id/addresses/:addrId` | Cập nhật địa chỉ | JWT |
-| DELETE | `/customers/:id/addresses/:addrId` | Xóa địa chỉ | JWT |
-| PUT | `/customers/:id/addresses/:addrId/default` | Đặt làm mặc định | JWT |
+| Method | Endpoint                                   | Mô tả                                              | Auth         |
+| ------ | ------------------------------------------ | -------------------------------------------------- | ------------ |
+| GET    | `/customers`                               | Danh sách khách hàng                               | Admin Cookie |
+| GET    | `/customers/:id`                           | Thông tin khách hàng                               | Admin Cookie |
+| POST   | `/customers`                               | Đăng ký (dùng cho `/auth/register`)                | —            |
+| PUT    | `/customers/:id`                           | Cập nhật thông tin                                 | JWT          |
+| DELETE | `/customers/:id`                           | Xóa tài khoản                                      | Admin Cookie |
+| GET    | `/customers/:id/addresses`                 | Danh sách địa chỉ (auto-seed từ profile nếu trống) | JWT          |
+| POST   | `/customers/:id/addresses`                 | Thêm địa chỉ mới                                   | JWT          |
+| PUT    | `/customers/:id/addresses/:addrId`         | Cập nhật địa chỉ                                   | JWT          |
+| DELETE | `/customers/:id/addresses/:addrId`         | Xóa địa chỉ                                        | JWT          |
+| PUT    | `/customers/:id/addresses/:addrId/default` | Đặt làm mặc định                                   | JWT          |
 
 ---
 
 ### Orders
 
-| Method | Endpoint | Mô tả | Auth |
-|--------|---------|-------|------|
-| GET | `/orders` | Tất cả đơn hàng | Admin Cookie |
-| GET | `/orders/:id` | Chi tiết đơn | Admin Cookie / JWT |
-| GET | `/orders/customer/:customerId` | Đơn hàng của khách | JWT |
-| POST | `/orders/checkout` | Đặt hàng mới | JWT |
-| PUT | `/orders/:id` | Cập nhật trạng thái | Admin Cookie |
+| Method | Endpoint                       | Mô tả               | Auth               |
+| ------ | ------------------------------ | ------------------- | ------------------ |
+| GET    | `/orders`                      | Tất cả đơn hàng     | Admin Cookie       |
+| GET    | `/orders/:id`                  | Chi tiết đơn        | Admin Cookie / JWT |
+| GET    | `/orders/customer/:customerId` | Đơn hàng của khách  | JWT                |
+| POST   | `/orders/checkout`             | Đặt hàng mới        | JWT                |
+| PUT    | `/orders/:id`                  | Cập nhật trạng thái | Admin Cookie       |
 
 **Body checkout:**
+
 ```json
 {
   "customerId": 1,
@@ -720,6 +755,7 @@ IX_Users_Username_Unique    ON Users(Username)
 ```
 
 **Response checkout thành công:**
+
 ```json
 {
   "message": "Đặt hàng thành công!",
@@ -727,7 +763,11 @@ IX_Users_Username_Unique    ON Users(Username)
   "total": 850000,
   "email": "customer@gmail.com",
   "shippingAddress": "123 Đường ABC...",
-  "updatedCustomer": { "id": 1, "address": "123 Đường ABC...", "phone": "0909123456" }
+  "updatedCustomer": {
+    "id": 1,
+    "address": "123 Đường ABC...",
+    "phone": "0909123456"
+  }
 }
 ```
 
@@ -735,13 +775,13 @@ IX_Users_Username_Unique    ON Users(Username)
 
 ### Posts & Categories
 
-| Method | Endpoint | Mô tả |
-|--------|---------|-------|
-| GET | `/posts` | Tất cả bài viết (kèm danh mục) |
-| GET | `/posts/:id` | Chi tiết bài viết |
-| GET | `/posts/category/:categoryId` | Bài viết theo danh mục |
-| GET | `/categories` | Danh sách danh mục blog |
-| GET | `/categoriesproduct` | Danh mục sản phẩm |
+| Method | Endpoint                      | Mô tả                          |
+| ------ | ----------------------------- | ------------------------------ |
+| GET    | `/posts`                      | Tất cả bài viết (kèm danh mục) |
+| GET    | `/posts/:id`                  | Chi tiết bài viết              |
+| GET    | `/posts/category/:categoryId` | Bài viết theo danh mục         |
+| GET    | `/categories`                 | Danh sách danh mục blog        |
+| GET    | `/categoriesproduct`          | Danh mục sản phẩm              |
 
 ---
 
@@ -769,10 +809,10 @@ IX_Users_Username_Unique    ON Users(Username)
 ```json
 // Payload chứa:
 {
-  "sub":   "1",
+  "sub": "1",
   "email": "customer@gmail.com",
-  "name":  "Nguyễn Văn A",
-  "exp":   1735689600
+  "name": "Nguyễn Văn A",
+  "exp": 1735689600
 }
 ```
 
@@ -780,8 +820,8 @@ IX_Users_Username_Unique    ON Users(Username)
 
 ```js
 // axiosClient.js — tự động đính token vào mọi request
-axios.interceptors.request.use(config => {
-  const token = localStorage.getItem('token');
+axios.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
   if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
@@ -793,85 +833,93 @@ axios.interceptors.request.use(config => {
 
 ### 10.1 Ràng buộc Database
 
-| Bảng | Trường | Ràng buộc |
-|------|--------|----------|
-| Customers | Email | UNIQUE, NOT NULL |
-| Users | Username | UNIQUE, NOT NULL |
-| Products | Price | > 0 (decimal 18,2) |
-| Products | StockQuantity | >= 0 |
-| Orders | Status | 0, 1, hoặc 2 |
-| OrderDetails | Quantity | >= 1 |
-| OrderDetails | UnitPrice | > 0 |
-| CustomerAddresses | CustomerId | FK → Customers CASCADE DELETE |
-| Orders | CustomerId | FK → Customers CASCADE DELETE |
-| OrderDetails | OrderId | FK → Orders CASCADE DELETE |
-| ProductImages | ProductId | FK → Products CASCADE DELETE |
+| Bảng              | Trường        | Ràng buộc                     |
+| ----------------- | ------------- | ----------------------------- |
+| Customers         | Email         | UNIQUE, NOT NULL              |
+| Users             | Username      | UNIQUE, NOT NULL              |
+| Products          | Price         | > 0 (decimal 18,2)            |
+| Products          | StockQuantity | >= 0                          |
+| Orders            | Status        | 0, 1, hoặc 2                  |
+| OrderDetails      | Quantity      | >= 1                          |
+| OrderDetails      | UnitPrice     | > 0                           |
+| CustomerAddresses | CustomerId    | FK → Customers CASCADE DELETE |
+| Orders            | CustomerId    | FK → Customers CASCADE DELETE |
+| OrderDetails      | OrderId       | FK → Orders CASCADE DELETE    |
+| ProductImages     | ProductId     | FK → Products CASCADE DELETE  |
 
 ### 10.2 Validation Backend (Controller)
 
 #### Đăng ký khách hàng (`POST /api/customers`)
-| Trường | Ràng buộc | Thông báo lỗi |
-|--------|----------|-------------|
-| FullName | 2–100 ký tự | "Họ tên phải có ít nhất 2 ký tự" |
-| Email | Đúng format, không trùng | "Email đã được đăng ký" |
-| Phone | 8–20 ký tự, chỉ số/ký tự hợp lệ | "Số điện thoại không hợp lệ" |
-| Password | Tối thiểu 6 ký tự | "Mật khẩu phải có ít nhất 6 ký tự" |
+
+| Trường   | Ràng buộc                       | Thông báo lỗi                      |
+| -------- | ------------------------------- | ---------------------------------- |
+| FullName | 2–100 ký tự                     | "Họ tên phải có ít nhất 2 ký tự"   |
+| Email    | Đúng format, không trùng        | "Email đã được đăng ký"            |
+| Phone    | 8–20 ký tự, chỉ số/ký tự hợp lệ | "Số điện thoại không hợp lệ"       |
+| Password | Tối thiểu 6 ký tự               | "Mật khẩu phải có ít nhất 6 ký tự" |
 
 #### Đặt hàng (`POST /api/orders/checkout`)
-| Trường | Ràng buộc | Thông báo lỗi |
-|--------|----------|-------------|
-| Items | Không được rỗng | "Giỏ hàng trống" |
-| RecipientName | 2–100 ký tự | "Tên người nhận phải có ít nhất 2 ký tự" |
-| ShippingAddress | Tối thiểu 5 ký tự | "Địa chỉ giao hàng quá ngắn" |
-| RecipientPhone | 8–20 ký tự (nếu nhập) | "Số điện thoại không hợp lệ" |
-| Quantity | > 0 | "Số lượng sản phẩm không hợp lệ" |
-| StockQuantity | Đủ tồn kho | "Sản phẩm X chỉ còn Y sản phẩm" |
+
+| Trường          | Ràng buộc             | Thông báo lỗi                            |
+| --------------- | --------------------- | ---------------------------------------- |
+| Items           | Không được rỗng       | "Giỏ hàng trống"                         |
+| RecipientName   | 2–100 ký tự           | "Tên người nhận phải có ít nhất 2 ký tự" |
+| ShippingAddress | Tối thiểu 5 ký tự     | "Địa chỉ giao hàng quá ngắn"             |
+| RecipientPhone  | 8–20 ký tự (nếu nhập) | "Số điện thoại không hợp lệ"             |
+| Quantity        | > 0                   | "Số lượng sản phẩm không hợp lệ"         |
+| StockQuantity   | Đủ tồn kho            | "Sản phẩm X chỉ còn Y sản phẩm"          |
 
 #### Thêm/sửa sản phẩm
-| Trường | Ràng buộc | Thông báo lỗi |
-|--------|----------|-------------|
-| Name | 3–200 ký tự | "Tên sản phẩm phải có ít nhất 3 ký tự" |
-| Price | > 0 | "Giá sản phẩm phải lớn hơn 0" |
-| StockQuantity | >= 0 | "Tồn kho không thể là số âm" |
-| CategoryProductId | Phải tồn tại | "Danh mục sản phẩm không tồn tại" |
+
+| Trường            | Ràng buộc    | Thông báo lỗi                          |
+| ----------------- | ------------ | -------------------------------------- |
+| Name              | 3–200 ký tự  | "Tên sản phẩm phải có ít nhất 3 ký tự" |
+| Price             | > 0          | "Giá sản phẩm phải lớn hơn 0"          |
+| StockQuantity     | >= 0         | "Tồn kho không thể là số âm"           |
+| CategoryProductId | Phải tồn tại | "Danh mục sản phẩm không tồn tại"      |
 
 ### 10.3 Validation Frontend (Client-side)
 
 #### Form Đăng ký
-| Trường | Kiểm tra |
-|--------|---------|
-| Họ tên | Bắt buộc, >= 2 ký tự |
-| Email | Bắt buộc, format `^[^\s@]+@[^\s@]+\.[^\s@]+$` |
-| SĐT | Format số (8–20 ký tự), nếu có nhập |
-| Mật khẩu | Bắt buộc, >= 6 ký tự |
-| Xác nhận MK | Phải khớp với mật khẩu |
+
+| Trường      | Kiểm tra                                      |
+| ----------- | --------------------------------------------- |
+| Họ tên      | Bắt buộc, >= 2 ký tự                          |
+| Email       | Bắt buộc, format `^[^\s@]+@[^\s@]+\.[^\s@]+$` |
+| SĐT         | Format số (8–20 ký tự), nếu có nhập           |
+| Mật khẩu    | Bắt buộc, >= 6 ký tự                          |
+| Xác nhận MK | Phải khớp với mật khẩu                        |
 
 #### Form Đăng nhập
-| Trường | Kiểm tra |
-|--------|---------|
-| Email | Bắt buộc, format email |
-| Mật khẩu | Bắt buộc, >= 6 ký tự |
+
+| Trường   | Kiểm tra               |
+| -------- | ---------------------- |
+| Email    | Bắt buộc, format email |
+| Mật khẩu | Bắt buộc, >= 6 ký tự   |
 
 #### Form Thanh toán
-| Trường | Kiểm tra |
-|--------|---------|
-| Tên người nhận | Bắt buộc, >= 2 ký tự |
-| SĐT | Format số (8–20 ký tự), nếu có nhập |
-| Địa chỉ | Bắt buộc, >= 5 ký tự |
+
+| Trường         | Kiểm tra                            |
+| -------------- | ----------------------------------- |
+| Tên người nhận | Bắt buộc, >= 2 ký tự                |
+| SĐT            | Format số (8–20 ký tự), nếu có nhập |
+| Địa chỉ        | Bắt buộc, >= 5 ký tự                |
 
 #### Form Địa chỉ (Profile)
-| Trường | Kiểm tra |
-|--------|---------|
-| Tên người nhận | Bắt buộc, >= 2 ký tự |
-| SĐT | Format số, nếu có nhập |
-| Địa chỉ | Bắt buộc, >= 5 ký tự |
+
+| Trường         | Kiểm tra               |
+| -------------- | ---------------------- |
+| Tên người nhận | Bắt buộc, >= 2 ký tự   |
+| SĐT            | Format số, nếu có nhập |
+| Địa chỉ        | Bắt buộc, >= 5 ký tự   |
 
 #### Form Đổi mật khẩu
-| Trường | Kiểm tra |
-|--------|---------|
-| MK cũ | Bắt buộc |
-| MK mới | Bắt buộc, >= 6 ký tự, khác MK cũ |
-| Xác nhận | Phải khớp MK mới |
+
+| Trường   | Kiểm tra                         |
+| -------- | -------------------------------- |
+| MK cũ    | Bắt buộc                         |
+| MK mới   | Bắt buộc, >= 6 ký tự, khác MK cũ |
+| Xác nhận | Phải khớp MK mới                 |
 
 ---
 
@@ -880,6 +928,7 @@ axios.interceptors.request.use(config => {
 ### 11.1 Kiểm thử chức năng Admin
 
 #### Đăng nhập Admin
+
 ```
 URL: https://localhost:7090/Account/Login
 Tài khoản: admin / Admin@123
@@ -887,6 +936,7 @@ Kết quả mong đợi: Chuyển hướng về /Home (Dashboard)
 ```
 
 #### Thêm sản phẩm mới
+
 ```
 1. Vào /Product → Thêm sản phẩm mới
 2. Điền: Tên "Bình Gốm Test", Giá 100000, Tồn kho 5, chọn Danh mục
@@ -896,6 +946,7 @@ Kết quả: Sản phẩm xuất hiện trong danh sách, hiển thị trên fro
 ```
 
 #### Upload gallery ảnh sản phẩm
+
 ```
 1. Vào /Product → Edit sản phẩm bất kỳ
 2. Kéo xuống phần "Gallery hình ảnh"
@@ -906,6 +957,7 @@ Kết quả: Ảnh hiện trong gallery trang chi tiết sản phẩm frontend
 ```
 
 #### Cập nhật trạng thái đơn hàng
+
 ```
 1. Vào /Order → click vào đơn hàng bất kỳ
 2. Đổi Status từ 0 → 1 (Đang giao) → Lưu
@@ -917,6 +969,7 @@ Kết quả: Badge đơn hàng cập nhật, khách thấy thay đổi trong /ac
 ### 11.2 Kiểm thử chức năng Khách hàng
 
 #### Đăng ký tài khoản mới
+
 ```
 URL: http://localhost:3000/register
 Nhập: Họ tên "Nguyễn Test", Email mới, Mật khẩu "123456"
@@ -924,6 +977,7 @@ Kết quả: Thông báo thành công, tự chuyển sang /login sau 2 giây
 ```
 
 #### Đăng nhập và giỏ hàng
+
 ```
 1. Đăng nhập với email/mật khẩu đã đăng ký
 2. Vào /products → click "Thêm vào giỏ" nhiều sản phẩm
@@ -933,6 +987,7 @@ Kết quả: Giỏ hàng cập nhật realtime, header hiển thị badge số l
 ```
 
 #### Đặt hàng (Golden Path)
+
 ```
 1. Đăng nhập → Thêm sản phẩm vào giỏ → Vào /checkout
 2. Chọn địa chỉ đã lưu HOẶC nhấn "Địa chỉ mới" điền form
@@ -947,6 +1002,7 @@ Kết quả mong đợi:
 ```
 
 #### Quản lý địa chỉ nhận hàng
+
 ```
 1. Vào /account → tab "Địa chỉ nhận hàng"
 2. Lần đầu: tự động hiện địa chỉ từ profile làm mặc định
@@ -956,6 +1012,7 @@ Kết quả: Địa chỉ mặc định có viền vàng + badge ★ Mặc đị
 ```
 
 #### Xem lịch sử đơn hàng
+
 ```
 1. Vào /account → tab "Đơn hàng của tôi"
 2. Click vào đơn → mở rộng xem chi tiết
@@ -969,6 +1026,7 @@ Kết quả: Hiện danh sách sản phẩm, địa chỉ giao, tổng tiền, t
 Truy cập `https://localhost:7090/swagger` để test trực tiếp tất cả API.
 
 #### Test đăng ký + đăng nhập
+
 ```
 1. POST /api/auth/register — body: { fullName, email, phone, password }
 2. POST /api/auth/login    — body: { email, password }
@@ -982,30 +1040,35 @@ Truy cập `https://localhost:7090/swagger` để test trực tiếp tất cả 
 ### 11.4 Test Cases quan trọng
 
 #### TC01: Email trùng khi đăng ký
+
 ```
 Input: Đăng ký email đã tồn tại
 Expected: HTTP 400 — "Email đã được đăng ký"
 ```
 
 #### TC02: Đặt hàng vượt tồn kho
+
 ```
 Input: Nhập số lượng > StockQuantity của sản phẩm
 Expected: HTTP 400 — "Sản phẩm X chỉ còn Y sản phẩm"
 ```
 
 #### TC03: Đặt hàng sản phẩm hết hàng
+
 ```
 Input: Sản phẩm có StockQuantity = 0
 Expected: HTTP 400 — "Sản phẩm X đã hết hàng"
 ```
 
 #### TC04: Giá sản phẩm = 0
+
 ```
 Input: Admin nhập Price = 0 khi thêm sản phẩm
 Expected: HTTP 400 — "Giá sản phẩm phải lớn hơn 0"
 ```
 
 #### TC05: Địa chỉ tự động seed lần đầu
+
 ```
 Điều kiện: Khách có Customer.Address nhưng chưa có CustomerAddresses
 Action: Mở tab "Địa chỉ nhận hàng"
@@ -1013,30 +1076,35 @@ Expected: Tự động tạo 1 entry mặc định từ customer.Address
 ```
 
 #### TC06: Xóa địa chỉ mặc định
+
 ```
 Action: Xóa địa chỉ đang là mặc định
 Expected: Địa chỉ tiếp theo tự động thành mặc định
 ```
 
 #### TC07: Đặt hàng với địa chỉ mới → Tự lưu
+
 ```
 Action: Checkout với địa chỉ chưa có trong danh sách
 Expected: Sau đặt hàng, địa chỉ xuất hiện trong tab Địa chỉ
 ```
 
 #### TC08: Upload ảnh sản phẩm không hợp lệ
+
 ```
 Input: Upload file .pdf hoặc file > 6MB
 Expected: Báo lỗi "Chỉ chấp nhận file ảnh" / "Kích thước tối đa 6MB"
 ```
 
 #### TC09: Mật khẩu mới trùng mật khẩu cũ
+
 ```
 Input: Nhập mật khẩu mới = mật khẩu cũ
 Expected (frontend): "Mật khẩu mới không được trùng với mật khẩu cũ"
 ```
 
 #### TC10: Token hết hạn / không hợp lệ
+
 ```
 Input: Gửi request API với token sai/hết hạn
 Expected: HTTP 401 Unauthorized
@@ -1049,6 +1117,7 @@ Expected: HTTP 401 Unauthorized
 ### Backend không khởi động được
 
 **Lỗi: Port 7090 đã bị chiếm**
+
 ```powershell
 # Kill process đang giữ port
 Get-Process -Name "CMS.Backend" | Stop-Process -Force
@@ -1058,12 +1127,14 @@ taskkill /PID <PID> /F
 ```
 
 **Lỗi: DLL bị lock khi build**
+
 ```powershell
 Get-Process -Name "CMS.Backend" | Stop-Process -Force
 dotnet build CMS.Backend/CMS.Backend.csproj
 ```
 
 **Lỗi: Cannot connect to SQL Server**
+
 ```
 - Kiểm tra SQL Server service đang chạy
 - Kiểm tra tên server trong appsettings.json
@@ -1074,6 +1145,7 @@ dotnet build CMS.Backend/CMS.Backend.csproj
 ### Database
 
 **Lỗi: EF Migration snapshot không khớp**
+
 ```powershell
 # Tạo migration rỗng để sync snapshot
 dotnet ef migrations add SyncSnapshot `
@@ -1083,6 +1155,7 @@ dotnet ef migrations add SyncSnapshot `
 ```
 
 **Lỗi: Duplicate key khi tạo Unique Index**
+
 ```sql
 -- Tìm email trùng trước
 SELECT Email, COUNT(*) cnt FROM Customers
@@ -1093,6 +1166,7 @@ GROUP BY Email HAVING COUNT(*) > 1;
 ### Frontend
 
 **Lỗi: CORS — Cannot access API từ React**
+
 ```
 - Đảm bảo backend đang chạy tại https://localhost:7090
 - Kiểm tra appsettings — CORS chỉ cho phép http://localhost:3000
@@ -1100,6 +1174,7 @@ GROUP BY Email HAVING COUNT(*) > 1;
 ```
 
 **Lỗi: 401 Unauthorized khi gọi API cần JWT**
+
 ```
 - Kiểm tra localStorage có key 'token'
 - Token có thể đã hết hạn (7 ngày) — đăng nhập lại
@@ -1107,11 +1182,234 @@ GROUP BY Email HAVING COUNT(*) > 1;
 ```
 
 **Lỗi: Ảnh sản phẩm không hiển thị**
+
 ```
 - File ảnh phải nằm trong CMS.Backend/wwwroot/uploads/
 - URL trả về từ API dạng: /uploads/ten-file.jpg
 - Frontend ghép: https://localhost:7090 + /uploads/ten-file.jpg
 ```
+
+---
+
+## 14. Quản lý Git & .gitignore
+
+### 14.1 Tổng quan
+
+Dự án sử dụng file `.gitignore` tại thư mục gốc để loại bỏ các thư mục và file không cần thiết khỏi Git. Việc này giúp:
+
+- Giảm kích thước repository
+- Bảo vệ thông tin nhạy cảm (mật khẩu, token)
+- Tránh conflict do file build/runtime sinh ra
+
+### 14.2 Các thư mục "rác" đã được loại bỏ
+
+| Thư mục / File     | Lý do loại bỏ                                               | Đã có trong .gitignore |
+| ------------------ | ----------------------------------------------------------- | ---------------------- |
+| `node_modules/`    | Thư viện npm — nặng hàng trăm MB, tự sinh khi `npm install` | ✅ Dòng 292            |
+| `[Bb]in/`          | File binary .NET sau khi build                              | ✅ Dòng 33             |
+| `[Oo]bj/`          | File trung gian C# khi compile                              | ✅ Dòng 34             |
+| `.env`             | Biến môi trường chứa URL, secret                            | ✅ Dòng 7              |
+| `.env.development` | Biến môi trường dev                                         | ✅ (pattern .env\*)    |
+| `.env.production`  | Biến môi trường production                                  | ✅ (pattern .env\*)    |
+| `.vs/`             | Cache Visual Studio                                         | ✅ Dòng 39             |
+| `*.user`           | Cấu hình cá nhân VS                                         | ✅ Dòng 12             |
+
+### 14.3 Kiểm tra .gitignore hiện tại có đủ không
+
+```powershell
+# Kiểm tra xem node_modules có đang bị track không
+git ls-files --cached | Select-String "node_modules"
+
+# Nếu ra kết quả → cần xóa khỏi Git cache (xem mục 14.5)
+```
+
+### 14.4 Nội dung .gitignore chuẩn cho dự án này
+
+File `.gitignore` gốc tại `CMS_NguyenNgocBaoNgan/.gitignore` đã đầy đủ. Dưới đây là tóm tắt các phần quan trọng nhất:
+
+```gitignore
+# ── Biến môi trường (chứa secret, không commit) ──────────────────
+.env
+.env.local
+.env.development
+.env.production
+
+# ── Node.js / React (Frontend) ───────────────────────────────────
+node_modules/
+build/
+
+# ── .NET / ASP.NET Core (Backend) ────────────────────────────────
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+*.user
+*.suo
+.vs/
+
+# ── Database files ────────────────────────────────────────────────
+*.mdf
+*.ldf
+*.ndf
+
+# ── Upload ảnh (dữ liệu runtime, không commit) ────────────────────
+# CMS.Backend/wwwroot/uploads/
+# Thêm dòng sau nếu muốn ignore uploads:
+# wwwroot/uploads/
+
+# ── OS / IDE ──────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+```
+
+### 14.5 Hướng dẫn: Xóa thư mục rác ra khỏi Git (nếu đã lỡ commit)
+
+Nếu `node_modules/`, `bin/`, `obj/` **đã bị commit** trước đó, cần xóa khỏi Git tracking (không xóa khỏi máy):
+
+#### Bước 1 — Xóa khỏi Git index (giữ lại trên máy)
+
+```powershell
+# Từ thư mục gốc dự án: CMS_NguyenNgocBaoNgan/
+
+# Xóa node_modules khỏi Git
+git rm -r --cached cms.frontend/node_modules/
+
+# Xóa bin/, obj/ của Backend
+git rm -r --cached CMS.Backend/bin/
+git rm -r --cached CMS.Backend/obj/
+
+# Xóa bin/, obj/ của Data layer
+git rm -r --cached CMS.Data/bin/
+git rm -r --cached CMS.Data/obj/
+```
+
+#### Bước 2 — Xác nhận .gitignore đã có rule đúng
+
+```powershell
+# Kiểm tra file .gitignore có dòng tương ứng
+Get-Content .gitignore | Select-String -Pattern "node_modules|\[Bb\]in|\[Oo\]bj"
+```
+
+#### Bước 3 — Commit thay đổi
+
+```powershell
+git add .gitignore
+git commit -m "chore: remove node_modules, bin, obj from Git tracking"
+git push
+```
+
+#### Bước 4 — Thành viên khác cần chạy lại
+
+```powershell
+git pull
+npm install          # Tại cms.frontend/
+dotnet build         # Tại CMS.Backend/ hoặc từ gốc
+```
+
+> **Lưu ý quan trọng:** `git rm --cached` chỉ xóa file khỏi Git, **không xóa khỏi ổ đĩa**. Các thư mục vẫn còn nguyên trên máy cục bộ.
+
+### 14.6 Kiểm tra file nào sẽ bị commit trước khi push
+
+```powershell
+# Xem danh sách file đang được theo dõi bởi Git
+git status
+
+# Kiểm tra file nào KHÔNG bị ignore
+git check-ignore -v cms.frontend/node_modules/
+# Output mẫu: .gitignore:292:node_modules/  cms.frontend/node_modules/
+
+# Xem toàn bộ file sẽ được commit
+git diff --cached --name-only
+```
+
+### 14.7 Cấu trúc .gitignore theo layer
+
+```
+CMS_NguyenNgocBaoNgan/
+├── .gitignore                   ← File gitignore duy nhất (root)
+│    ├── [Bb]in/ & [Oo]bj/      ── loại .NET build artifacts
+│    ├── node_modules/           ── loại npm packages
+│    ├── .env*                   ── loại biến môi trường nhạy cảm
+│    ├── .vs/                    ── loại Visual Studio cache
+│    └── *.user / *.suo          ── loại cấu hình cá nhân IDE
+│
+├── CMS.Backend/                 ← bin/ & obj/ được ignore ✓
+├── CMS.Data/                    ← bin/ & obj/ được ignore ✓
+└── cms.frontend/
+     └── node_modules/           ← được ignore ✓
+```
+
+---
+
+## 15. Thống kê chức năng Frontend (API vs Client-side)
+
+### 15.1 Chức năng dùng API (gọi Backend qua axiosClient)
+
+#### Pages
+
+| Trang             | Chức năng                      | API endpoint                      | Phương thức              |
+| ----------------- | ------------------------------ | --------------------------------- | ------------------------ |
+| **Trang chủ**     | Lấy sản phẩm mới nhất          | `GET /products/latest`            | `productService`         |
+| **Trang chủ**     | Lấy sản phẩm bán chạy          | `GET /products/top-selling`       | `productService`         |
+| **Danh sách SP**  | Lấy SP có lọc/tìm/phân trang   | `GET /products/shop`              | `productService`         |
+| **Danh sách SP**  | Lấy danh mục sản phẩm          | `GET /categories-products`        | `categoryProductService` |
+| **Chi tiết SP**   | Thông tin 1 sản phẩm + gallery | `GET /products/{id}`              | Direct `axiosClient`     |
+| **Chi tiết SP**   | Sản phẩm cùng danh mục (gợi ý) | `GET /products/category/{id}`     | Direct `axiosClient`     |
+| **Tìm kiếm**      | Tìm sản phẩm theo từ khóa      | `GET /products/shop?keyword=`     | `productService`         |
+| **Tìm kiếm**      | Tìm bài viết theo từ khóa      | `GET /posts?q=`                   | Direct `axiosClient`     |
+| **Blog Category** | Bài viết theo danh mục         | `GET /posts/category/{id}`        | `blogService`            |
+| **Blog Category** | Thông tin danh mục blog        | `GET /blog-categories/{id}`       | `blogService`            |
+| **Chi tiết Blog** | Nội dung bài viết              | `GET /posts/{id}`                 | Direct `axiosClient`     |
+| **Chi tiết Blog** | Bài viết gợi ý cùng danh mục   | `GET /posts/category/{id}`        | Direct `axiosClient`     |
+| **Đăng nhập**     | Xác thực tài khoản             | `POST /auth/login`                | `authService`            |
+| **Đăng ký**       | Tạo tài khoản mới              | `POST /auth/register`             | `authService`            |
+| **Quên mật khẩu** | Gửi OTP qua email              | `POST /auth/forgot-password`      | `authService`            |
+| **Quên mật khẩu** | Reset mật khẩu                 | `POST /auth/reset-password`       | `authService`            |
+| **Thanh toán**    | Lấy danh sách địa chỉ          | `GET /addresses/{customerId}`     | `addressService`         |
+| **Thanh toán**    | Đặt hàng / tạo đơn             | `POST /orders/checkout`           | `orderService`           |
+| **Tài khoản**     | Lịch sử đơn hàng               | `GET /orders/my/{customerId}`     | `orderService`           |
+| **Tài khoản**     | Chi tiết đơn hàng              | `GET /orders/{orderId}`           | `orderService`           |
+| **Tài khoản**     | Cập nhật thông tin cá nhân     | `PUT /auth/profile`               | `authService`            |
+| **Tài khoản**     | Đổi mật khẩu                   | `PUT /auth/change-password`       | `authService`            |
+| **Tài khoản**     | CRUD địa chỉ nhận hàng         | `GET/POST/PUT/DELETE /addresses/` | `addressService`         |
+
+#### Components
+
+| Component                 | Chức năng                | API endpoint                  | Phương thức              |
+| ------------------------- | ------------------------ | ----------------------------- | ------------------------ |
+| `HeroBanner.jsx`          | Lấy banner quảng cáo     | `GET /advertisements`         | `advertisementService`   |
+| `CategoryProductList.jsx` | Danh mục sản phẩm        | `GET /categories-products`    | `categoryProductService` |
+| `BlogList.jsx`            | Toàn bộ bài viết         | `GET /posts`                  | `blogService`            |
+| `BlogCategoryList.jsx`    | Danh mục blog            | `GET /blog-categories`        | `blogService`            |
+| `BlogCardList.jsx`        | Bài viết mới (trang chủ) | `GET /posts`                  | `blogService`            |
+| `Header.jsx`              | Tìm kiếm nhanh sản phẩm  | `GET /products/shop?keyword=` | `productService`         |
+
+### 15.2 Chức năng KHÔNG dùng API (Client-side)
+
+| Trang / Component    | Chức năng                            | Cách thực hiện                          |
+| -------------------- | ------------------------------------ | --------------------------------------- |
+| `Cart.jsx`           | Hiển thị, sửa số lượng, xóa sản phẩm | `CartContext` — `localStorage`          |
+| `Cart.jsx`           | Tính tổng tiền                       | Tính toán client từ `items[]`           |
+| `ProductCard.jsx`    | Popup thêm vào giỏ, chọn số lượng    | `CartContext.addToCart()`               |
+| `ProductCard.jsx`    | Kiểm tra & cảnh báo sắp hết hàng     | Dùng `stockQuantity` đã có trong object |
+| `AuthContext.jsx`    | Lưu trạng thái đăng nhập             | `localStorage` (auth_token, auth_user)  |
+| `AuthContext.jsx`    | Đăng xuất                            | Xóa `localStorage`, reset state         |
+| `Home.jsx`           | Testimonials, Instagram grid         | HTML tĩnh — hardcoded                   |
+| `Home.jsx`           | Banner giới thiệu, icons             | HTML tĩnh — hardcoded                   |
+| `Home.jsx`           | Phần Workshop & CTA                  | HTML tĩnh — hardcoded                   |
+| `ComingSoon.jsx`     | Trang Booking, Liên hệ               | Nội dung cứng trong `PAGES` object      |
+| `ProductSidebar.jsx` | Bộ lọc sidebar (emit filter)         | Props/Callback về `Product.jsx`         |
+| `SearchResults.jsx`  | Điều hướng khi click kết quả         | React Router `useNavigate`              |
+
+### 15.3 Tổng hợp
+
+| Nhóm                                    | Số lượng chức năng |
+| --------------------------------------- | ------------------ |
+| ✅ Dùng API qua Service (`*Service.js`) | **19**             |
+| ✅ Dùng API trực tiếp (`axiosClient`)   | **6**              |
+| 🔵 Client-side / Static / LocalStorage  | **12**             |
+| **Tổng**                                | **37**             |
 
 ---
 
