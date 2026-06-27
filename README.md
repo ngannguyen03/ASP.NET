@@ -3,7 +3,7 @@
 > **Họ và tên:** Nguyễn Ngọc Bảo Ngân  
 > **MSSV:** 2123110503  
 > **Lớp:** CCQ2311D  
-> **Môn học:** Lập trình ứng dụng Web nâng cao
+> **Môn học:** ASP.NET
 
 ---
 
